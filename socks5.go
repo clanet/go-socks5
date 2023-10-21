@@ -157,7 +157,7 @@ func (s *Server) ServeConn(conn net.Conn) error {
 	if client, ok := conn.RemoteAddr().(*net.TCPAddr); ok {
 		request.RemoteAddr = &AddrSpec{IP: client.IP, Port: client.Port}
 	}
-
+	s.config.Logger.Printf("socks: connected from %v", conn.RemoteAddr())
 	// Process the client request
 	if err := s.handleRequest(request, conn); err != nil {
 		err = fmt.Errorf("Failed to handle request: %v", err)
