@@ -190,7 +190,7 @@ func (s *Server) handleConnect(ctx context.Context, conn conn, req *Request) err
 		}
 		return fmt.Errorf("Connect to %v failed: %v", req.DestAddr, err)
 	}
-	s.config.Logger.Printf("socks: Dialing %v", req.realDestAddr "success")
+	s.config.Logger.Printf("socks: Dialing %v", req.realDestAddr, "success")
 	defer target.Close()
 
 	// Send success
