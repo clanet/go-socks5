@@ -174,6 +174,7 @@ func (s *Server) handleConnect(ctx context.Context, conn conn, req *Request) err
 			return net.Dial(net_, addr)
 		}
 	}
+	s.config.Logger.Printf("[INFO] socks: Dialing %v", req.realDestAddr)
 	target, err := dial(ctx, "tcp", req.realDestAddr.Address())
 	if err != nil {
 		msg := err.Error()
