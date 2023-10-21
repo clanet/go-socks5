@@ -174,9 +174,10 @@ func (s *Server) handleConnect(ctx context.Context, conn conn, req *Request) err
 			return net.Dial(net_, addr)
 		}
 	}
-	s.config.Logger.Printf("[INFO] socks: Dialing %v", req.realDestAddr)
+	
 	target, err := dial(ctx, "tcp", req.realDestAddr.Address())
 	if err != nil {
+		s.config.Logger.Printf("socks: Dialing %v", req.realDestAddr, "failed")
 		msg := err.Error()
 		resp := hostUnreachable
 		if strings.Contains(msg, "refused") {
@@ -189,6 +190,7 @@ func (s *Server) handleConnect(ctx context.Context, conn conn, req *Request) err
 		}
 		return fmt.Errorf("Connect to %v failed: %v", req.DestAddr, err)
 	}
+	s.config.Logger.Printf("socks: Dialing %v", req.realDestAddr "success")
 	defer target.Close()
 
 	// Send success
